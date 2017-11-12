@@ -48,20 +48,16 @@ function getAllDrawings(req, res, next) {
 
 function createDrawing(req, res, next) {
   const results = [];
-  // Grab data from the URL parameters
-  //const id = req.params.id;
-  // Grab data from http request
-  //console.log("req",req);
 
   const data = {
     qrcode: req.body.qrcode,
     points: req.body.points,
-    author: req.body.author
   };
 
   // SQL Query > Insert Data
   // ALTER TABLE users ADD UNIQUE (hash);
-  client.query('INSERT INTO drawings(qrcode,points,author,datetime) values($1, $2, $3, now())', [data.qrcode, data.points, data.author], function (err, result) {
+  client.query('INSERT INTO drawings(qrcode,points,datetime) values($1, $2, now())', [data.qrcode, data.points], function (err, result) {
+    
     if (err) {
       console.log("-------- Query Error -------".red);
       console.log(err.detail);
@@ -103,15 +99,11 @@ function updateDrawing(req, res, next) {
   const id = req.params.id;
 
   const data = {
-    name: req.body.name,
-    user_name: req.body.user_name,
-    email: req.body.email,
-    password: req.body.password,
-    type: "simple"
+    points: req.body.points
   };
-
+  console.log('data',JSON.stringify(data));
   // SQL Query > Insert Data
-  client.query('UPDATE users SET name=($1), email=($2),  password=($3), type=($4) WHERE id=$5', [data.name, data.email, data.password, data.type, id], function (err, result) {
+  client.query('UPDATE drawings SET points = jsonb_set(points,$1) WHERE id=$2', [data.points, id], function (err, result) {
     if (err) {
       console.log("-------- Query Error -------".red);
       console.log(err);
@@ -121,7 +113,7 @@ function updateDrawing(req, res, next) {
 
     else {
       // SQL Query > Select Data
-      const query = client.query('SELECT name, email, type FROM users WHERE id=' + id);
+      const query = client.query('SELECT * FROM drawings WHERE id=' + id);
 
       // Stream results back one row at a time
       query.on('row', (row) => {
@@ -162,32 +154,4 @@ module.exports = {
   readDrawing: readDrawing,
   updateDrawing: updateDrawing,
   deleteDrawing: deleteDrawing
-
 }
-
-/*
-function getAllPuppies(req, res, next) {
-  db.any('select * from pups')
-    .then(function (data) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Retrieved ALL puppies'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-}
-  
-*/
-/*
-module.exports = {
-  getAllPuppies: getAllPuppies,
-  getSinglePuppy: getSinglePuppy,
-  createPuppy: createPuppy,
-  updatePuppy: updatePuppy,
-  removePuppy: removePuppy
-};
-*/

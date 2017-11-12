@@ -4,3 +4,5 @@ server/settings.js
 server/node_modules/
 
 server/node_modules/*
+
+trackingSystem/node_modules/*

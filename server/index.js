@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-
 var api = express.Router();
 
 //Users
