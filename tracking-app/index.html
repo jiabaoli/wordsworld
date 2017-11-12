@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tracking System</title>
+  <script src="tracking-min.js"></script>
+  
+  <style>
+    video, canvas {
+      margin-left: -10px;
+      margin-top: -10px;
+      position: absolute;
+    }
+    body{
+      background: #000;
+      color:#FFF;
+      font-family: monospace;
+    }
+    footer{
+      position: absolute;
+      bottom: 0px;
+      left:20px;
+    }
+    </style>
+</head>
+
+<body>
+ 
+      <video id="video" width="800" height="600" preload autoplay loop muted controls></video>
+      <canvas id="canvas" width="800" height="600"></canvas>
+ 
+  <br>
+  
+  <footer>
+    <p id="host"></p>
+    <p id="console">Waiting Connection...</p>
+    <script>document.write(process.versions.node)</script>, Chromium
+    <script>document.write(process.versions.chrome)</script>, and Electron
+    <script>document.write(process.versions.electron)</script>.
+    
+  </footer>
+  
+  <script>
+          // You can also require other files to run in this process
+          require('./renderer.js')
+  </script>
+
+<script>
+  
+</script>
+</body>
+
+</html>
