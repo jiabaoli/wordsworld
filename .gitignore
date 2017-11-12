@@ -1,2 +1,4 @@
 
 server/settings.js
+
+server/node_modules/password-hash-and-salt/.npmignore
