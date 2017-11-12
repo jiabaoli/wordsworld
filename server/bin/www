@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+const browserSync = require('browser-sync');
+const app = require('../index');
+const qrcode = require('qrcode-terminal');
+
+const colors = require('colors');
+const ip = require("ip");
+const HOST_IP = ip.address();
+
+//============PORT=========
+app.set('port', process.env.PORT || 3000);
+app.get('')
+
+var server = app.listen(app.get('port'), function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log("                                 _");
+  console.log("                                | |");
+  console.log("         __      ____ _ _ __ ___| |__   ___  _   _ ___  ___");
+  console.log("         \x5C \x5C /\x5C / / _\x60 | '__/ _ \x5C '_ \x5C / _ \x5C| | | / __|/ _ \x5C");
+  console.log("          \x5C V  V / (_| | | |  __/ | | | (_) | |_| \x5C__ \x5C  __/");
+  console.log("           \x5C_/\x5C_/ \x5C__,_|_|  \x5C___|_| |_|\x5C___/ \x5C__,_|___/\x5C___|");
+  console.log("");
+  console.log("");
+  console.log("                     __                      _     _");
+  console.log("                    / _|                    | |   | |");
+  console.log("               ___ | |_  __      _____  _ __| | __| |___");
+  console.log("              / _ \x5C|  _| \x5C \x5C /\x5C / / _ \x5C| '__| |/ _\x60 / __|");
+  console.log("             | (_) | |    \x5C V  V / (_) | |  | | (_| \x5C__ \x5C");
+  console.log("              \x5C___/|_|     \x5C_/\x5C_/ \x5C___/|_|  |_|\x5C__,_|___/");
+  console.log("");
+  
+  console.log(' VR/AR Hackathon Project - Database API - using Postgres + node.js + Express '.inverse); // inverses the color
+  console.log('| github: https://github.com/lucascassiano/vr-ar-hackathon-2017-mit         |')
+  console.log('| warehouse of worlds-- RESTful API listening http://localhost:' + port + "         |");
+  console.log('| Remote Access http://' + HOST_IP + ":" + port + "                                    |");
+  console.log('+----------------------------------------------------------------------------+');
+
+  if (process.env.QRCODE) {
+    DisplayQRCode(port);
+  }
+});
+
+function DisplayQRCode(port) {
+  qrcode.generate('http://' + ip.address() + ":" + port, function (qrcode) {
+    console.log(qrcode);
+  });
+}
+
